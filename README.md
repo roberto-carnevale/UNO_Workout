@@ -18,10 +18,13 @@ and a button to start.
 Globally is no more than a few euros and an Arduino UNO you probably do not use anymore...
 
 ## PIN Out
-Connect the encoder to pin 2 and 3 to use Arduino UNO interrupts
+Connect the encoder to pin 2 and 3 to use Arduino UNO interrupts.
+
 The 7 segment 4 digit is connected to 11 (CLK) and 12 (DIO).
+
 I set up a pull up button at pin 7 and the pull up buzzer at pin 6.
-finally the IR at pin 8 (do not use a PWM pin)
+
+finally the IR at pin 8 (do not use a PWM pin).
 
 ## An old remote
 If you have an old remote from a broken "whatever" stuff, use it... record the sequence and substitute them on define
