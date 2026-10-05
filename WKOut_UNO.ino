@@ -108,6 +108,7 @@ void state1(){
 
   show_time(seconds);
   if (digitalRead(BUTTON) == LOW || ir_data == IR_OK){
+    ir_data = 0;
     millis_start = millis();
     delay(950);
     state = 10;
