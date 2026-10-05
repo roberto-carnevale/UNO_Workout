@@ -75,22 +75,11 @@ void loop(){
 void state1(){
   // reads from the counter
   counter = myEnc.read();
-  static uint32_t last_ir_data = 0;
   //changes from the IR
   if (IrReceiver.decode()) {
     ir_data = IrReceiver.decodedIRData.decodedRawData;
-    
-    
-
-    // Se è un codice di ripetizione (spesso raw data è 0 o ha il flag IS_REPEAT)
-    if (ir_data == 0 || (IrReceiver.decodedIRData.flags & IRDATA_FLAGS_IS_REPEAT)) {
-      ir_data = last_ir_data;
-      delay(1250);
-    } else {
-      last_ir_data = ir_data;
-    }
     IrReceiver.resume();
-    Serial.println(ir_data, HEX);
+    //Serial.println(ir_data, HEX);
     
     if (ir_data == IR_UP)
     {
@@ -121,7 +110,6 @@ void state1(){
   if (digitalRead(BUTTON) == LOW || ir_data == IR_OK){
     millis_start = millis();
     delay(950);
-    last_ir_data = 0;
     state = 10;
   }
 }
