@@ -36,7 +36,7 @@ If you have an old remote from a broken "whatever" stuff, use it... record the s
 | IR_OK       | Start countdown  |
 | IR_POWER    | Stop countdown   |
 
-Each 64 steps of the rotary encoder the clock gets +/-15" till 5:00 and 1' after til 60 minutes.
+Each 64 steps of the rotary encoder the clock gets +/-15" till 5:00 and 1' after till 90 minutes.
 ## IRremote lib and tune()
 IRremote library and `tune()` command share the same timer in the Arduino UNO platform.
 The `#define IR_USE_AVR_TIMER1` instruction moves the IRremote lib on another internal timer.

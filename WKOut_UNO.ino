@@ -94,6 +94,7 @@ void state1(){
   }
 
   if (counter < 0) {myEnc.write(0);counter = 0;}
+  if (counter > 6721) {myEnc.write(6721);counter = 6721;}
   if (counter != old_counter) {
     old_counter = counter;
     
@@ -103,6 +104,7 @@ void state1(){
     else {
       seconds = BASE_FIVE_MINS + ((counter - COUNT_FIVE_MINS) >> 6) * 60;
     }
+    Serial.println(counter);
   }
 
 
