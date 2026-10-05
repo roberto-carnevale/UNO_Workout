@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <TM1637Display.h> //Display
 #include <Encoder.h>
+#define IR_USE_AVR_TIMER1
 #include <IRremote.hpp> // Library for TL1838 IR Receiver
 
 #define ENC_A 2
@@ -11,7 +12,7 @@
 #define COUNT_FIVE_MINS 1280
 #define BASE_FIVE_MINS 300
 #define BUZZER_PIN 6
-#define IR_PIN 9
+#define IR_PIN 8
 #define IR_UP 0xF7087F80
 #define IR_DOWN 0xEF107F80
 #define IR_OK 0xF30C7F80
@@ -78,9 +79,8 @@ void state1(){
   //changes from the IR
   if (IrReceiver.decode()) {
     ir_data = IrReceiver.decodedIRData.decodedRawData;
+    Serial.println(ir_data, HEX);
     IrReceiver.resume();
-    //Serial.println(ir_data, HEX);
-    
     if (ir_data == IR_UP)
     {
       counter += 64;
@@ -128,10 +128,12 @@ void state10() {
   display.showNumberDecEx(time,0b01000000,true,4,0);
   else
   display.showNumberDec(time,true,4,0);
+
   if (IrReceiver.decode()) {
     ir_data = IrReceiver.decodedIRData.decodedRawData;
     IrReceiver.resume();
   }
+
   if (digitalRead(BUTTON) == LOW || ir_data == IR_POWER){
     display.showNumberDecEx(8888,0b01000000);
     delay(1000);
@@ -151,5 +153,6 @@ void state20(){
     digitalWrite(LED_BUILTIN, LOW);   // change state of the LED by setting the pin to the LOW voltage level
     delay(500);                      // wait for a second
   }
+  IrReceiver.resume();
   state = 1;
 }
