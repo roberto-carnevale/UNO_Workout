@@ -9,6 +9,7 @@
 #define CLK 11
 #define DIO 12
 #define BUTTON 7
+#define LED 5
 #define COUNT_FIVE_MINS 1280
 #define BASE_FIVE_MINS 300
 #define BUZZER_PIN 6
@@ -41,6 +42,9 @@ void setup() {
   delay(500);
   // Set encoder pins as inputs
   pinMode(BUTTON, INPUT_PULLUP);
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(LED, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
   myEnc.write(0);
   // Setup Serial Monitor
   Serial.begin(9600);
@@ -50,8 +54,6 @@ void setup() {
   pinMode(BUZZER_PIN, OUTPUT);
   digitalWrite(BUZZER_PIN, LOW);
   noTone(BUZZER_PIN);
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
   state = 1;
   display.showNumberDecEx(0,0b01000000,true,4,0);
 }
@@ -76,6 +78,7 @@ void loop(){
 void state1(){
   // reads from the counter
   counter = myEnc.read();
+  digitalWrite(LED, LOW);
   //changes from the IR
   if (IrReceiver.decode()) {
     ir_data = IrReceiver.decodedIRData.decodedRawData;
@@ -126,10 +129,14 @@ void show_time(int secs) {
 void state10() {
   int minus = seconds - ((millis() - millis_start) / 1000);
   int time = (minus / 60)*100 + (minus % 60);
-  if (minus %2 > 0) 
-  display.showNumberDecEx(time,0b01000000,true,4,0);
-  else
-  display.showNumberDec(time,true,4,0);
+  if (minus %2 > 0) {
+    display.showNumberDecEx(time,0b01000000,true,4,0);
+    digitalWrite(LED, HIGH);
+  }
+  else {
+    display.showNumberDec(time,true,4,0);
+    digitalWrite(LED, LOW);
+  }
 
   if (IrReceiver.decode()) {
     ir_data = IrReceiver.decodedIRData.decodedRawData;
@@ -148,11 +155,11 @@ void state10() {
 void state20(){
   
   for(int i = 0; i < 3 ; i++){
-    digitalWrite(LED_BUILTIN, HIGH);  // change state of the LED by setting the pin to the HIGH voltage level
+    digitalWrite(LED, HIGH);  // change state of the LED by setting the pin to the HIGH voltage level
     tone(BUZZER_PIN, 440, 500);
-    delay(500);                      // wait for a second
+    delay(500);                    // wait for a second
     noTone(BUZZER_PIN);
-    digitalWrite(LED_BUILTIN, LOW);   // change state of the LED by setting the pin to the LOW voltage level
+    digitalWrite(LED, LOW);   // change state of the LED by setting the pin to the LOW voltage level
     delay(500);                      // wait for a second
   }
   IrReceiver.resume();

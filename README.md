@@ -4,7 +4,7 @@ A decent Workout clock comes about 50 euros.
 This is minimal, but at home you do not need huge stuff:
 * a remote
 * a countdown
-* a buffer to tell you to stop/start
+* a buzzer to tell you to stop/start
 easy and friendly!
 
 ## What do you need?
@@ -13,7 +13,7 @@ An old Arduino UNO or similar board... and you you are smarter than me you can u
 * a ir receiver LM1838
 * a standard rotor encoder
 * a passive buzzer
-and a button to start.
+* a led and a button (nice to combine them)
 
 Globally is no more than a few euros and an Arduino UNO you probably do not use anymore...
 
